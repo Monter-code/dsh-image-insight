@@ -1,0 +1,28 @@
+# ============================================================================
+# dsh-image-insight —— DSH bundle patch
+# ============================================================================
+# 这是插件的“挂载声明”。DSH 启动时按 bundle 层栈叠加各插件 patch，
+# 本文件把图像洞察插件插入 profile 的配置树。
+#
+# 安装方式：
+#   dsh plugin --profile desktop add link:<本目录绝对路径>
+# 或发布后：
+#   dsh plugin --profile desktop add dsh-image-insight
+#
+# 配置项（全部可省略，省略即使用下方默认值）：
+#   provider / model   云端视觉模型路由；留空则自动选择（见 README）
+#   cacheDir           本地缓存目录；默认 <DSH_HOME>/image-insight-cache
+#   cacheTtlDays       缓存有效期（天）；默认 30
+#   cacheMaxEntries    缓存条目上限（LRU 淘汰）；默认 2000
+#   maxImageEdge       送入云端前的长边像素上限；默认 1536
+#   maxConcurrency     一次批量调用中并发识别的图片数；默认 3
+#   timeoutMs          单次云端调用超时；默认 60000
+#   reasoningEffort    云端思考档位；'auto'（默认，自动挑最便宜档，识别更快）
+#                      / 'default'（不指定，用模型默认档）/ 显式档位名如 'low'
+#                      宿主规则：档位必须与 prepareCall 后的 resolved config 完全
+#                      一致（见 README「为什么快」），本插件已自动对齐，勿手改。
+# ============================================================================
+
+- insert:
+    - id: dsh-image-insight
+      name: dsh-image-insight

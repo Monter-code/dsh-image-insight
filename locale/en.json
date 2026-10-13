@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Image Insight",
+    "description": "Faster, more accurate image understanding: local sharp measurements plus structured cloud vision for description, OCR, object boxes, and fine-grained attributes — with fingerprint caching so repeat images return in milliseconds."
+  }
+}

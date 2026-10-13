@@ -1,0 +1,16 @@
+# dependencies (optional: sharp is resolved from the DSH profile at runtime)
+node_modules/
+.pnpm-store/
+
+# local artifacts
+*.log
+tmp/
+.tmp/
+.cache/
+
+# editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
