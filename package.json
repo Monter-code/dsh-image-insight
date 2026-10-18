@@ -1,7 +1,13 @@
 {
   "name": "dsh-image-insight",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "author": "Monter-code",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monter-code/dsh-image-insight.git"
+  },
+  "homepage": "https://github.com/Monter-code/dsh-image-insight#readme",
   "description": "本地 sharp 感知 + 云端视觉模型的结构化图像识别插件：一次调用拿到描述、OCR、目标定位、细粒度属性，并用图片指纹缓存让重复图片毫秒返回。",
   "keywords": [
     "dsh",
@@ -32,6 +38,9 @@
     "bundle": {
       "patch": "./cordis.patch.yml"
     }
+  },
+  "engines": {
+    "dsh": ">=0.2.1-rc.1"
   },
   "optionalDependencies": {
     "sharp": "^0.35.5"

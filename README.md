@@ -121,12 +121,30 @@ DSH 插件：**更准、更快**地识别图片。
 
 ## 依赖与降级
 
-- **`sharp` 是可选依赖。** 解析顺序：常规 `require.resolve` → `$DSH_HOME/profiles/<name>/node_modules`
-  → profiles 通配 → 当前工作目录向上 6 层。找不到时会抛带可执行指引的
+- **`sharp` 是可选依赖。** 解析顺序：常规 `require.resolve` → 插件自己目录下的 `node_modules` →
+  `$DSH_HOME/profiles/<name>/node_modules` → profiles 通配 → 当前工作目录向上 6 层。找不到时会抛带可执行指引的
   `IMAGE_INSIGHT_DEPENDENCY_MISSING`，但**插件本身仍能加载**，只是本地感知能力不可用。
+  Windows 上 `sharp` 的 win32 平台包必须**同时带 `libvips-42.dll` / `libvips-cpp-*.dll`**，缺 DLL 时
+  `require('sharp')` 会报 `Could not load the "sharp" module using the win32-x64 runtime`（宿主里连 `@img` 目录都
+  可能只被栽了一半）。本仓库的 `node_modules/` 里放了一份自洽的 `sharp@0.35.4 + @img/sharp-win32-x64（含 DLL）`
+  作为**本地兜底**（`.gitignore` 已忽略，不随包发布）；发布到市场后由 npm `optionalDependencies` 正常安装。
 - **`llm` / `attachments` 缺失时不报错。** 工具会返回完整的本地结果，`model.source = "unavailable"`，
   `notice` 说明"已降级为本地感知"及具体原因，而不是让整次调用失败。
 - 需要云端能力但确实没有可用视觉模型时，抛 `IMAGE_INSIGHT_NO_VISION_MODEL`，错误文本包含候选拒绝原因与模型目录。
+
+## DSH 版本适配
+
+| DSH | 状态 |
+| --- | --- |
+| **0.2.1**（当前） | 正常。工具注册、`llm.prepareCall()` 派发校验、`sharp` 本地感知、缓存、相似图检索都在 0.2.1 真宿主上跑过 |
+| 0.1.x | 正常（0.1.0 插件版本即针对该宿主） |
+
+0.2.1 上没有引入破坏性宿主改动，适配工作是「把清单与验证补齐」：
+
+- `package.json` 增加 `engines.dsh: ">=0.2.1-rc.1"`、`repository` / `homepage` / `author`，版本升到 `0.2.0`；
+- 三个工具的输出 schema 在 0.2.1 的严格校验下重新跑通（`tests/schema-contract.mjs`）；
+- 本地感知依赖 `sharp` 的 Windows 二进制完整性重新核对（见上一条）。
+
 
 ## 安装
 
