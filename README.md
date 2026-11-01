@@ -136,12 +136,12 @@ DSH 插件：**更准、更快**地识别图片。
 
 | DSH | 状态 |
 | --- | --- |
-| **0.2.1**（当前） | 正常。工具注册、`llm.prepareCall()` 派发校验、`sharp` 本地感知、缓存、相似图检索都在 0.2.1 真宿主上跑过 |
+| **0.2.1**（当前，含 `0.2.1-rc.3`） | 正常。工具注册、`llm.prepareCall()` 派发校验、`sharp` 本地感知、缓存、相似图检索都在真宿主上跑过；0.2.1-rc.3 上复跑 selftest 20 / integration 29 / smoke-load / schema-contract 全绿 |
 | 0.1.x | 正常（0.1.0 插件版本即针对该宿主） |
 
 0.2.1 上没有引入破坏性宿主改动，适配工作是「把清单与验证补齐」：
 
-- `package.json` 增加 `engines.dsh: ">=0.2.1-rc.1"`、`repository` / `homepage` / `author`，版本升到 `0.2.0`；
+- `package.json` 增加 `engines.dsh: ">=0.2.1-rc.1"`、`repository` / `homepage` / `author`，版本升到 `0.2.1`；
 - 三个工具的输出 schema 在 0.2.1 的严格校验下重新跑通（`tests/schema-contract.mjs`）；
 - 本地感知依赖 `sharp` 的 Windows 二进制完整性重新核对（见上一条）。
 
